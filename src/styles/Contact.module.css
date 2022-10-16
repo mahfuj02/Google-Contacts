@@ -1,0 +1,41 @@
+.tableRow {
+  display: flex;
+  width: 100%;
+  min-height: 48px;
+  cursor: pointer;
+}
+.tableRow .column {
+  flex-grow: 1;
+  font-size: 11px;
+  padding: 8px 0px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.column .checkbox {
+  display: none;
+  width: 30px;
+  justify-content: center;
+  align-items: center;
+}
+.tableRow .column .checkbox input {
+  cursor: pointer;
+}
+ .tableRow .actionButtons {
+  display: none;
+}
+ .tableRow:hover,
+ .tableRow.selected {
+  background-color: #f1f1f1;
+}
+ .tableRow:hover .checkbox,
+.tableRow.selected .checkbox {
+  display: flex;
+}
+ .tableRow:hover .avatar,
+ .tableRow.selected .avatar {
+  display: none;
+}
+.tableRow:hover .actionButtons {
+  display: block;
+}

@@ -1,0 +1,177 @@
+.sidebar {
+  min-width: 200px;
+  height: 100%;
+}
+.sidebar .divider {
+  width: 100%;
+  border-top: 1px solid #ccc;
+  margin: 5px 0px;
+}
+.sidebar .createContactBtn {
+  border-radius: 50px;
+  box-shadow: 0px 0px 5px #9c9c9c;
+  display: inline-flex;
+  height: 40px;
+  align-items: center;
+  font-size: 12px;
+  gap: 10px;
+  padding: 0 20px;
+  padding-left: 10px;
+  margin-left: 10px;
+  margin-top: 30px;
+}
+.sidebar .links {
+  margin-top: 20px;
+}
+.sidebar .links .link {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 9px 25px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  justify-content: space-between;
+}
+.sidebar .links .link .content {
+  display: flex;
+  gap: 20px;
+}
+.sidebar .links .link .content .fa-chevron-up {
+  display: none;
+}
+.sidebar .links .link .fa {
+  font-size: 12px;
+  color: #6e6e6e;
+}
+.sidebar .links .link:hover {
+  background-color: #e4e4e4;
+}
+.sidebar .links .link.active {
+  background-color: #e8f0fe;
+}
+.sidebar .links .link.active,
+.sidebar .links .link.active .fa {
+  color: #1967d2;
+}
+.sidebar .links .dropdownSection .dropdownContent {
+  display: none;
+}
+.sidebar .links .dropdownSection .dropdownContent .actions {
+  display: none;
+  gap: 5px;
+}
+
+.sidebar .links .dropdownSection .dropdownContent .link:hover .actions {
+  display: flex;
+}
+
+.sidebar
+  .links
+  .dropdownSection
+  .dropdownContent
+  .link:hover
+  .actions
+  .actionButton:hover
+  .fa {
+  color: #3a3a3a;
+}
+.sidebar .links .dropdownSection.active > .link:first-child {
+  background-color: #f1f3f4;
+}
+
+.sidebar .links .dropdownSection.active > .link:first-child .fa-chevron-up {
+  display: block;
+}
+
+.sidebar .links .dropdownSection.active > .link:first-child .fa-chevron-down {
+  display: none;
+}
+.sidebar .links .dropdownSection.active .dropdownContent {
+  display: block;
+}
+/* Dropdown */
+.dropdownSection .dropdownContent {
+  display: none;
+}
+.actions {
+  display: none;
+  gap: 5px;
+}
+
+.actions {
+  display: flex;
+}
+
+.actionButton:hover .fa {
+  color: #3a3a3a;
+}
+.dropdownSection.active > .link:first-child {
+  background-color: #f1f3f4;
+}
+
+.dropdownSection.active > .link:first-child .fa-chevron-up {
+  display: block;
+}
+
+.dropdownSection.active > .link:first-child .fa-chevron-down {
+  display: none;
+}
+.dropdownContent {
+  display: block;
+}
+
+/* Dialog box */
+.dialog {
+  justify-content: center;
+  align-items: center;
+  display: none;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+}
+.dialog.active {
+  display: flex;
+}
+.dialog .dialogOverlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.dialog .dialogContentContainer {
+  min-width: 300px;
+  min-height: 200px;
+  background-color: #fff;
+  z-index: 1;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+.dialog .dialogContentContainer .dialogTitle {
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+}
+.dialog .dialogContentContainer .dialogContent {
+  flex-grow: 1;
+  padding: 10px 20px;
+}
+ .dialogFooter {
+  min-height: 30px;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  /* justify-content: end; */
+  gap: 10px;
+}
+.dialog .dialogContentContainer .dialogFooter button {
+  background-color: transparent;
+  color: #1b73e8;
+  border: 0px;
+  cursor: pointer;
+}

@@ -1,0 +1,6 @@
+.field {
+  display: flex;
+  gap: 10px;
+  padding-bottom: 4px;
+  font-size: 13px;
+}

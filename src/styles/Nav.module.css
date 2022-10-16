@@ -1,0 +1,27 @@
+.header {
+  height: 50px;
+  display: flex;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  color: #616161;
+  box-sizing: border-box;
+  align-items: center;
+}
+.header .logoSection {
+  flex-basis: 20%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.header .logoSection .logo {
+  width: 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  cursor: pointer;
+}
+.toggleIcon:hover{
+  cursor: pointer;
+}

@@ -1,0 +1,90 @@
+.labelsPickerButton{
+  font-size: 12px;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 25%;
+  cursor: pointer;
+}
+.labelsPickerButton:hover{
+  font-size: 12px;
+  border: 1px solid #1b73e8;
+  padding: 5px;
+  border-radius: 25%;
+  cursor: pointer;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 9px 25px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  justify-content: space-between;
+}
+.link .content {
+  display: flex;
+  gap: 20px;
+}
+/* #labelEditorDialog,
+.labelEditorDialog{
+  display: none !important;
+} */
+.dialog {
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+}
+.dialog.active {
+  display: flex;
+}
+.dialog .dialogOverlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: rgba( 0, 0, 0, .3 );
+}
+.dialogContentContainer{
+  width: 300px;
+  height: auto;
+  margin: auto;
+  margin-top: 15%;
+  background-color: #fff;
+  z-index: 1;
+  position: relative;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+.dialog .dialogContentContainer .dialogTitle {
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.dialog .dialogContentContainer .dialogContent {
+  flex-grow: 1;
+  padding: 10px 20px;
+}
+.dialog .dialogContentContainer .dialogFooter {
+  min-height: 30px;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  /* justify-content: end; */
+  gap: 10px;
+}
+.dialog .dialogContentContainer .dialogFooter button {
+  background-color: transparent;
+  color: #1b73e8;
+  border: 0px;
+  cursor: pointer;
+}

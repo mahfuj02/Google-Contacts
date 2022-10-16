@@ -1,0 +1,17 @@
+.contactContentContainer {
+  padding-top: 30px;
+}
+.contactContentContainer .contactContent {
+  width: 50%;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: inline-block;
+}
+ .contactContentContainer .contactContent h6 {
+  margin-top: 0px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
