@@ -59,7 +59,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'contactlist',
-    'core',
+    'accounts',
 ]
 # SITE_ID = 2
 
@@ -248,6 +248,6 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 
-AUTH_USER_MODEL = 'core.User'
+AUTH_USER_MODEL = 'accounts.User'
 
 CORS_ORIGIN_ALLOW_ALL = True
