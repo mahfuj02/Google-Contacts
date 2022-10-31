@@ -1,4 +1,4 @@
-export default function getServerCode (googleToken, dispatch, route , setCookie){
+export default function getServerCode (googleToken, route , setCookie){
     fetch(
         `http://127.0.0.1:8000/login/google/`,
 
@@ -14,6 +14,7 @@ export default function getServerCode (googleToken, dispatch, route , setCookie)
         .then((res) => res.json())
 
         .then((data) => {
+            
             // sessionStorage.setItem("adminToken", data?.key);
             setCookie("adminToken", data?.token);
             // dispatch(setAccessToken(data?.token));
