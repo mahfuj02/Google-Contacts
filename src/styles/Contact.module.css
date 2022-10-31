@@ -9,8 +9,9 @@
   font-size: 11px;
   padding: 8px 0px;
   display: flex;
-  align-items: center;
+  align-items: left;
   gap: 20px;
+  width: 30%;
 }
 .column .checkbox {
   display: none;

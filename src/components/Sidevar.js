@@ -1,6 +1,7 @@
 import classes from "../styles/Sidevar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import {
   faUser,
   faChevronDown,
@@ -9,11 +10,13 @@ import {
   faPencil,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import CreateLabel from "./CreateLabel";
+
 export default function Sidevar() {
   const levelRef = useRef();
   const [status, setStatus] = useState(false);
+  const [labels, setLabels] = useState("");
 
   function dropDownLevel() {
     if (status) {
@@ -24,6 +27,23 @@ export default function Sidevar() {
       levelRef.current.style.display = "block";
     }
   }
+
+  useEffect(() => {
+    const axiosLabels = async () => {
+        await axios.get(`http://127.0.0.1:8000/api/labels/`)
+        .then((response) => {
+          console.log("success", response.data.results);
+          setLabels(response.data.results)
+        })
+        .catch((error) => {
+          console.log("eroor.");
+        });
+
+      // console.log("daata...", data.results);
+     
+    };
+    axiosLabels();
+  }, []);
 
   return (
     <>
@@ -64,6 +84,25 @@ export default function Sidevar() {
             </div>
 
             <div className={classes.dropdownContent} ref={levelRef}>
+              {labels &&
+                labels.map((label) => (
+                  <div className={classes.link}>
+                    <div className={classes.content}>
+                      <FontAwesomeIcon icon={faTag} /> {label.title}
+                    </div>
+                    <div className={classes.counter}>500</div>
+
+                    <div className={classes.actions}>
+                      <div className={classes.actionButton}>
+                        <FontAwesomeIcon icon={faPencil} />
+                      </div>
+                      <div className={classes.actionButton}>
+                        <FontAwesomeIcon icon={faTrash} />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
               <div className={classes.link}>
                 <div className={classes.content}>
                   <FontAwesomeIcon icon={faTag} /> Label 1

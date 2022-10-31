@@ -1,60 +1,86 @@
-import FormRow from './FormRow'
-import classes from '../styles/CreateContactContent.module.css'
-import { faUser, faEnvelope, faPhone, faGlobe} from "@fortawesome/free-solid-svg-icons";
+import classes from "../styles/CreateContactContent.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faUser,
+  faEnvelope,
+  faPhone,
+  faGlobe,
+} from "@fortawesome/free-solid-svg-icons";
+
+
+import { useState } from "react";
+
+const initialValues = {
+  title: "",
+  email: "",
+  phone: "",
+  website: "",
+};
+
 export default function CreateContactContent() {
+
+  const [values, setValues] = useState(initialValues);
+  const handleInputChange = (e) => {
+    e.preventDefault();
+      const { name, value } = e.target;
+      setValues({
+        ...values,
+        [name]: value,
+      });
+    };
+    console.log("values,,,", values);
+
   return (
     <>
-      <div className={classes.contactEditorContent}>
-        <FormRow icon={ faUser } type="text" placeholder="Full Name"/>
-        <FormRow icon={ faEnvelope } type="email" placeholder="Email"/>
-        <FormRow icon={ faPhone } type="text" placeholder="Phone"/>
-        <FormRow icon={ faGlobe } type="text" placeholder="Website"/>
-        
-        {/* <div class="row">
-          <div class="iconColumn">
-            <i class="fa fa-envelope-o" aria-hidden="true"></i>
+      <form id="createcontactform">
+        <div className={classes.contactEditorContent}>
+          <div className={classes.row}>
+            <div className={classes.iconColumn}>
+              <FontAwesomeIcon icon={faUser} />
+            </div>
+            <div className={classes.inputColumn}>
+            <input type="text" placeholder="Full Name" value={values.title} onChange={handleInputChange} name="title" /> 
+            </div>
+            {/* <div className={classes.crossIconColumn}>
+              <FontAwesomeIcon icon={crossIcon} />
+            </div> */}
           </div>
-          <div class="inputColumn">
-            <input type="email" placeholder="Email" />
+          <div className={classes.row}>
+            <div className={classes.iconColumn}>
+              <FontAwesomeIcon icon={faEnvelope} />
+            </div>
+            <div className={classes.inputColumn}>
+            <input type="email" placeholder="Email" value={values.email} name="email" onChange={handleInputChange} /> 
+            </div>
+            {/* <div className={classes.crossIconColumn}>
+              <FontAwesomeIcon icon={crossIcon} />
+            </div> */}
           </div>
-          <div
-            onclick="this.closest('.row').querySelector('input').value = ''"
-            class="crossIconColumn"
-          >
-            <i class="fa fa-times" aria-hidden="true"></i>
+          <div className={classes.row}>
+            <div className={classes.iconColumn}>
+              <FontAwesomeIcon icon={faPhone} />
+            </div>
+            <div className={classes.inputColumn}>
+            <input type="text" placeholder="Phone" value={values.phone} name="phone" onChange={handleInputChange} /> 
+            </div>
+            {/* <div className={classes.crossIconColumn}>
+              <FontAwesomeIcon icon={crossIcon} />
+            </div> */}
           </div>
-        </div>
+          <div className={classes.row}>
+            <div className={classes.iconColumn}>
+              <FontAwesomeIcon icon={faGlobe} />
+            </div>
+            <div className={classes.inputColumn}>
+            <input type="text" placeholder="website" value={values.website} name="website" onChange={handleInputChange} /> 
+            </div>
+            {/* <div className={classes.crossIconColumn}>
+              <FontAwesomeIcon icon={crossIcon} />
+            </div> */}
+          </div>
 
-        <div class="row">
-          <div class="iconColumn">
-            <i class="fa fa-phone" aria-hidden="true"></i>
-          </div>
-          <div class="inputColumn">
-            <input type="text" placeholder="Phone" />
-          </div>
-          <div
-            onclick="this.closest('.row').querySelector('input').value = ''"
-            class="crossIconColumn"
-          >
-            <i class="fa fa-times" aria-hidden="true"></i>
-          </div>
         </div>
-
-        <div class="row"> 
-          <div class="iconColumn">
-            <i class="fa fa-globe" aria-hidden="true"></i>
-          </div>
-          <div class="inputColumn">
-            <input type="text" placeholder="Website" />
-          </div>
-          <div
-            onclick="this.closest('.row').querySelector('input').value = ''"
-            class="crossIconColumn"
-          >
-            <i class="fa fa-times" aria-hidden="true"></i>
-          </div>
-  </div> */}
-      </div>
+      </form>
     </>
   );
 }

@@ -5,7 +5,11 @@ import {
   faPhone,
   faGlobe,
 } from "@fortawesome/free-solid-svg-icons";
+
 export default function ContactContent() {
+
+ 
+
   return (
     <div className={classes.contactContentContainer}>
       <div className={classes.contactContent}>

@@ -3,3 +3,30 @@
   padding-left: 50px;
   padding-top: 20px;
 }
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+.row .crossIconColumn {
+  width: 20px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-left: -10px;
+}
+.row .crossIconColumn .fa{
+  display: none;
+}
+.row .inputColumn {
+  flex-grow: 1;
+}
+.row input {
+  width: 100%;
+}
+.row .fa {
+  color: #ccc;
+}

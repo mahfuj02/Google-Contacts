@@ -1,0 +1,79 @@
+.contactHeader,
+.contactEditorHeader {
+  display: flex;
+  padding-top: 20px;
+  padding-left: 40px;
+  gap: 30px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 30px;
+}
+.contactHeader .avatar,
+.contactEditorHeader .avatar {
+  width: 150px;
+  height: 150px;
+  font-size: 64px;
+}
+.contactHeader .nameSection,
+.contactEditorHeader .nameSection {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 17px;
+  min-width: 30vw;
+}
+.contactHeader .nameSection .name,
+.contactEditorHeader .nameSection .name {
+  font-size: 28px;
+}
+.contactHeader .nameSection .labelsSection,
+.contactEditorHeader .nameSection .labelsSection {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.contactHeader .nameSection .labelsSection .labels,
+.contactEditorHeader .nameSection .labelsSection .labels {
+  display: flex;
+  gap: 7px;
+}
+.contactHeader .nameSection .labelsSection .labels .label,
+.contactEditorHeader .nameSection .labelsSection .labels .label {
+  font-size: 12px;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.contactHeader .nameSection .labelsSection .labels .label:hover,
+.contactEditorHeader .nameSection .labelsSection .labels .label:hover {
+  background-color: rgba(235, 235, 235, 0.2);
+}
+.contactHeader .nameSection .labelsSection .labelsPickerButton,
+.contactEditorHeader .nameSection .labelsSection .labelsPickerButton {
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1b73e8;
+  cursor: pointer;
+}
+.contactHeader .nameSection .labelsSection .labelsPickerButton:hover,
+.contactEditorHeader .nameSection .labelsSection .labelsPickerButton:hover {
+  background-color: rgba(235, 235, 235, 0.2);
+}
+.contactHeader .actionSection,
+.contactEditorHeader .actionSection {
+  display: flex;
+  align-items: flex-end;
+  /* justify-content: end; */
+  gap: 10px;
+}
+
+.contactEditorContent {
+  width: 40vw;
+  padding-left: 50px;
+  padding-top: 20px;
+}

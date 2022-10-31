@@ -102,6 +102,9 @@ a:hover {
 }
 .avatar.cameraIconButton .fa.fa-user {
   font-size: 100px;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
 }
 
 .avatar.cameraIconButton.imagePicked .fa.fa-user {

@@ -1,14 +1,19 @@
-import { useState  } from "react";
+import { useState } from "react";
 import classes from "../styles/Layout.module.css";
 import Nav from "./Nav";
 import Sidevar from "./Sidevar";
-export default function Layout({ children }) {
-  const [status, setStatus] = useState(true);
+import React from "react";
 
-  function SidevarStatus(){
-    if(status){
+
+const Layout = (props) => {
+  const [status, setStatus] = useState(true);
+  
+
+  function SidevarStatus() {
+    if (status) {
+
       setStatus(false);
-    }else{
+    } else {
       setStatus(true);
     }
   }
@@ -16,11 +21,11 @@ export default function Layout({ children }) {
     <>
       <Nav toggleFunc={SidevarStatus} />
       <div className={classes.contentContainer}>
-        {status? <Sidevar />:""}
-        <div className={classes.content}>
-          {children}
-        </div>
+        {status && <Sidevar />}
+        <div className={classes.content}>{props.children}</div>
       </div>
     </>
   );
-}
+};
+
+export default Layout;

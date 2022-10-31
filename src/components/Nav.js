@@ -1,11 +1,14 @@
-import Account from "./Account";
+// import Account from "./Account";
 import Search from "./Search";
 import classes from "../styles/Nav.module.css";
 import logo from "../assets/images/userIcon.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faSignOut } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-export default function Nav({ toggleFunc }) {
+
+const isAuthenticated = false;
+const Nav = ({ toggleFunc}) => {
+  
   return (
     <div className={classes.header}>
       <div to="/" className={`${classes.logoSection} `}>
@@ -25,7 +28,31 @@ export default function Nav({ toggleFunc }) {
         </Link>
       </div>
       <Search />
-      <Account />
+
+      {/* <Account /> */}
+
+      {isAuthenticated ? (
+        <div className={classes.actionSection}>
+          <div className={classes.logotButton}>
+            <Link to="/">
+              {" "}
+              <FontAwesomeIcon icon={faSignOut} />{" "}
+            </Link>
+          </div>
+          {/* <img src={profile} alt="profile" /> */}
+        </div>
+      ) : (
+        <div className={classes.actionSection}>
+          <div className={classes.logotButton}>
+            <Link className="nav-link" to="/login">
+              Log In
+            </Link>
+          </div>
+          {/* <img src={profile} alt="profile" /> */}
+        </div>
+      )}
     </div>
   );
-}
+};
+
+export default Nav;

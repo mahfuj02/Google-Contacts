@@ -30,7 +30,7 @@ export default function CreateContactHeader() {
         </div>
 
         <div className={classes.actionSection}>
-          <button className="editButton primary-button button">Save</button>
+          <button form="createcontactform" className="editButton primary-button button ">Save</button>
         </div>
       </div>
     </>
