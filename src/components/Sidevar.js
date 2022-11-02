@@ -32,18 +32,16 @@ export default function Sidevar() {
     const axiosLabels = async () => {
         await axios.get(`http://127.0.0.1:8000/api/labels/`)
         .then((response) => {
-          console.log("success", response.data.results);
+          console.log("success", response.data);
           setLabels(response.data.results)
         })
         .catch((error) => {
           console.log("eroor.");
         });
-
-      // console.log("daata...", data.results);
      
     };
     axiosLabels();
-  }, []);
+  }, [labels]);
 
   return (
     <>

@@ -12,9 +12,8 @@ export default function getServerCode (googleToken, route , setCookie){
         }
     )
         .then((res) => res.json())
-
         .then((data) => {
-            
+            console.log("data.. equal: ",data)
             // sessionStorage.setItem("adminToken", data?.key);
             setCookie("adminToken", data?.token);
             // dispatch(setAccessToken(data?.token));
