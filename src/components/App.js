@@ -8,7 +8,7 @@ import ContactProfile from "./pages/ContactProfile";
 import EditContact from "./pages/EditContact";
 import Login from "./pages/Login";
 // import Sidevar from "./Sidevar";
-import { AuthProvider } from "../context/AuthContext";
+import { AuthProvider } from "../contexts/AuthContext";
 
 function App() {
   return (

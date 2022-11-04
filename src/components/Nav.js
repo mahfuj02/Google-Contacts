@@ -6,8 +6,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faSignOut } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
+import { useAuth } from "../contexts/AuthContext";
+
 const isAuthenticated = false;
 const Nav = ({ toggleFunc}) => {
+
+  const {logout} = useAuth()
   
   return (
     <div className={classes.header}>
