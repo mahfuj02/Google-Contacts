@@ -10,7 +10,6 @@ from rest_framework.response import Response
 from .serializers import GoogleLoginSerializer, UserSerializer
 
 
-
 class AbstractBaseLoginView(GenericAPIView):
     authentication_classes = []
 
@@ -67,4 +66,3 @@ class UserRetrieveUpdateAPI(RetrieveUpdateAPIView):
                 user.address = value
         user.save()
         return Response(UserSerializer(user).data, status=status.HTTP_200_OK)
-
