@@ -1,22 +1,15 @@
-import classes from "../styles/CreateLabel.module.css";
+import classes from "../styles/EditLabel.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
-import { postRequest } from "../core/fetchers";
+import { faPencil } from "@fortawesome/free-solid-svg-icons";
+import {  useState } from "react";
+import { updateRequest } from "../core/fetchers";
 import { REST_API_ENDPOINTS } from "../core/routes";
 import { useCookies } from "react-cookie";
-
-const initialValues = {
-  title: "",
-  success: false,
-  error: false,
-};
-
-export default function CreateLabel({ onRefresh }) {
+import { useRefresh } from "../contexts/RefreshContext";
+export default function EditLabel({ label ,onRefresh }) {
   const [status, setStatus] = useState(false);
-  const [labels, setLabels] = useState(initialValues);
+  const [labels, setLabels] = useState(label);
   const [cookie] = useCookies();
-
   function ShowlabelDialog() {
     if (status) {
       setStatus(false);
@@ -40,33 +33,37 @@ export default function CreateLabel({ onRefresh }) {
     });
     console.log("labels: ", labels);
   };
-  const addLabelinfo = (e) => {
+  const updateLabelinfo = (e) => {
     e.preventDefault();
-
-    postRequest(REST_API_ENDPOINTS.labels, labels, cookie.server_token).then(
-      () => {
+    console.log(
+      updateRequest(
+        `${REST_API_ENDPOINTS.labels}${labels.id}/`,
+        labels,
+        cookie.server_token
+      ).then(() => {
         onRefresh();
-      }
+      })
     );
+  };
+  const multipleCaller = (e) => {
+    updateLabelinfo(e);
+    closeDialog(e);
   };
 
   return (
     <>
-      <div className={classes.link} onClick={ShowlabelDialog}>
-        <div className={classes.content}>
-          <FontAwesomeIcon icon={faPlus} />
-          Create Label
-        </div>
-      </div>
+      {/* <div className={classes.link} > */}
+      <FontAwesomeIcon onClick={ShowlabelDialog} icon={faPencil} />
+      {/* </div> */}
       {status && (
         <div id="labelEditorDialog" className={classes.dialog}>
           <div className={classes.dialogOverlay} onClick={closeDialog}></div>
           <form
             action=""
-            onSubmit={addLabelinfo}
+            onSubmit={multipleCaller}
             className={classes.dialogContentContainer}
           >
-            <div className={classes.dialogTitle}>Create Contact</div>
+            <div className={classes.dialogTitle}>Edit Contact</div>
             <div className={classes.dialogContent}>
               <input
                 type="text"
@@ -77,7 +74,7 @@ export default function CreateLabel({ onRefresh }) {
               />
             </div>
             <div className={classes.dialogFooter}>
-              <button className={classes.cancelBtn} onclick={closeDialog}>
+              <button className={classes.cancelBtn} onClick={closeDialog}>
                 Cancel
               </button>
               <button type="submit">Save</button>

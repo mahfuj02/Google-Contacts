@@ -8,15 +8,11 @@ import {
   faCamera,
 } from "@fortawesome/free-solid-svg-icons";
 
-import axios from "axios";
+import { useCookies } from "react-cookie";
 import LabelPicker from "../LabelPicker";
 import { useState } from "react";
-import {useNavigate} from 'react-router-dom'
-
-export const client = axios.create({
-  baseURL: "http://127.0.0.1:8000",
-  timeout: 60_000,
-});
+import { postRequest } from "../../core/fetchers";
+import { REST_API_ENDPOINTS } from "../../core/routes";
 
 const initialValues = {
   title: "",
@@ -24,62 +20,48 @@ const initialValues = {
   phone: "",
   image: null,
   website: "",
-  success:false,
-  error:false
+  label: [],
+  success: false,
+  error: false,
 };
+let labelList = []
+
 
 export default function CreateContact() {
   const [values, setValues] = useState(initialValues);
+  const [cookie] = useCookies();
   // const [image, setImage] = useState(null)
-  const history = useNavigate()
-
   const handleInputChange = (e) => {
     let { name, value } = e.target;
     if (e.target.name === "image") {
       value = URL.createObjectURL(e.target.files[0]);
     }
-    
+
     setValues({
       ...values,
       [name]: value,
     });
   };
 
-  const addContactInfo =  () => {
-    
-    let formData = new FormData()
-    formData.append('title', values.title)
-    formData.append('email', values.email)
-    formData.append('phone', values.phone)
-    if(values.image !== null)formData.append('image', values.image)
-
-    // FormData.forEach((value, key) => {
-    //   console.log("key %s: value %s", key, value);
-    //   })
-    // for(let data in formfield.entries()){
-    //   console.log(data[0], ' -' , data[1]);
-    // }
-    // client.post("/api/contacts/", formfield, {
-    //   headers: {
-    //     // "content-type": "multipart/form-data",
-    // },
-    // }).then(response =>console.log("Success"))
-    // .catch(error => console.log("Error"))
-     axios({
-      method: 'post',
-      url:`${process.env.REACT_APP_API_URL}/api/contacts/`,
-      data: formData
-    }).then((response) => {
-      console.log(response.data)
-      history.push('/')
-      values.success = true;
-      values.error = false;
-    }).catch((error) =>{
-      values.error = true;
-      values.success = false;
-    })
+  const addLabel = (labelList) => {
+    console.log("labelList to create Con: ", labelList)
+    values.label = labelList;
+    labelList = [];
+    console.log(labelList," labelList to create Con for values: ", values.label)
 
   }
+  
+
+  const addContactInfo = () => {
+    // let formData = new FormData();
+    // formData.append("title", values.title);
+    // formData.append("email", values.email);
+    // formData.append("phone", values.phone);
+    // if (values.image !== null) formData.append("image", values.image);
+    // console.log(cookie.server_token);
+    // console.log("Form data: ", formData, " values: ", values)
+    postRequest(REST_API_ENDPOINTS.contacts, values, cookie.server_token);
+  };
 
   return (
     <>
@@ -99,22 +81,27 @@ export default function CreateContact() {
               src={values.image}
               onChange={handleInputChange}
             />
-            <label for="avatarFilePickerInput">
+            <label htmlFor="avatarFilePickerInput">
               <FontAwesomeIcon icon={faCamera} />
             </label>
           </button>
         </div>
 
-        <div class={classes.nameSection}>
-          <div class={classes.name}></div>
-          <div class={classes.labelsSection}>
-            <div class={classes.labels}></div>
-            <LabelPicker />
+        <div className={classes.nameSection}>
+          <div className={classes.name}></div>
+          <div className={classes.labelsSection}>
+            <div className={classes.labels}></div>
+            <LabelPicker addLabel = {addLabel} labelList={labelList} />
           </div>
         </div>
 
         <div className={classes.actionSection}>
-          <button className="editButton primary-button button"  onClick={addContactInfo} >Save</button>
+          <button
+            className="editButton primary-button button"
+            onClick={addContactInfo}
+          >
+            Save
+          </button>
         </div>
       </div>
       <div className={classes.contactEditorContent}>

@@ -7,24 +7,28 @@ import {
   faPhone,
   faGlobe,
 } from "@fortawesome/free-solid-svg-icons";
-
+import { useCookies } from "react-cookie";
 import LabelPicker from "../LabelPicker";
 import ContactProfileField from "../ContactProfileField";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { REST_API_ENDPOINTS } from "../../core/routes";
+import { getRequest } from "../../core/fetchers";
 export default function ContactProfile() {
-  const [contact, setContact] = useState("");
+  const [ContactProfile, setContactProfile] = useState("");
+
+  const [cookie] = useCookies();
   const { id } = useParams();
-
-  const singleContact = async () => {
-    const { data } = await axios.get(
-      `${process.env.REACT_APP_API_URL}/api/contacts/${id}`
+  let lebelList = [];
+  const fetchContactProfile = async () => {
+    const profileData = await getRequest(
+      `${REST_API_ENDPOINTS.contacts}${id}`,
+      cookie.server_token
     );
-    setContact(data);
+    setContactProfile(profileData);
+    console.log(ContactProfile);
   };
-
   useEffect(() => {
-    singleContact();
+    fetchContactProfile();
   }, []);
 
   return (
@@ -32,19 +36,19 @@ export default function ContactProfile() {
       <div className={classes.contactHeader}>
         <div className="avatar">A</div>
         <div className={classes.nameSection}>
-          <div className={classes.name}>{contact.title}</div>
+          <div className={classes.name}>{ContactProfile.title}</div>
           <div className={classes.labelsSection}>
             <div className={classes.labels}>
-              {contact.label &&
-                contact.label.map((label) => (
+              {ContactProfile.label &&
+                ContactProfile.label.map((label) => (
                   <div className={classes.label}>{label.title}</div>
                 ))}
             </div>
-            <LabelPicker />
+            {/* <LabelPicker /> */}
           </div>
         </div>
         <div className={classes.actionSection}>
-          <Link to="/edit-person">
+          <Link to={`/edit-person/${id}`} state={{contactInfo: ContactProfile}} >
             {" "}
             <button className="editButton primary-button button">
               Edit
@@ -58,10 +62,10 @@ export default function ContactProfile() {
           <h6>Contact details</h6>
           <ContactProfileField icon={faEnvelope}>
             {/* testing@mahfuj.com */}
-            {contact.email}
+            {ContactProfile.email}
           </ContactProfileField>
           <ContactProfileField icon={faPhone}>
-            Phone: {contact.phone}
+            Phone: {ContactProfile.phone}
           </ContactProfileField>
           <ContactProfileField icon={faGlobe}>
             Website: https://www.google.com

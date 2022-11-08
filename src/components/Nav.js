@@ -5,14 +5,15 @@ import logo from "../assets/images/userIcon.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faSignOut } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
-import { useAuth } from "../contexts/AuthContext";
+const Nav = ({ toggleFunc }) => {
+  const [cookie, removeCookie] = useCookies();
+  const googleLogout = (response) => {
+    removeCookie("user", { path: '/' });
+    removeCookie("server_token",  {domain:'localhost:3000' , path: '/' });
+  };
 
-const isAuthenticated = false;
-const Nav = ({ toggleFunc}) => {
-
-  const {logout} = useAuth()
-  
   return (
     <div className={classes.header}>
       <div to="/" className={`${classes.logoSection} `}>
@@ -26,7 +27,6 @@ const Nav = ({ toggleFunc}) => {
         <Link
           to="/"
           className={`${classes.logo} link`}
-          onclick="window.location='/index.html'"
         >
           <img src={logo} alt="Contact" style={{ width: "40px" }} /> Contacts
         </Link>
@@ -35,13 +35,15 @@ const Nav = ({ toggleFunc}) => {
 
       {/* <Account /> */}
 
-      {isAuthenticated ? (
+      {cookie.user ? (
         <div className={classes.actionSection}>
           <div className={classes.logotButton}>
-            <Link to="/">
+            <Link to="/" onClick={googleLogout}>
               {" "}
-              <FontAwesomeIcon icon={faSignOut} />{" "}
+              <FontAwesomeIcon icon={faSignOut} />
+              {""}
             </Link>
+            <span className={classes.username}>{cookie.user.username}</span>
           </div>
           {/* <img src={profile} alt="profile" /> */}
         </div>

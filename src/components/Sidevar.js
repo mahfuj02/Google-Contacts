@@ -1,22 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import classes from "../styles/Sidevar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import {
   faUser,
   faChevronDown,
   faChevronUp,
   faTag,
-  faPencil,
-  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
 import CreateLabel from "./CreateLabel";
+import EditLabel from "./EditLabel";
+import { REST_API_ENDPOINTS } from "../core/routes";
+import { getRequest } from "../core/fetchers";
+import Delete from "./Delete";
 
 export default function Sidevar() {
   const levelRef = useRef();
   const [status, setStatus] = useState(false);
   const [labels, setLabels] = useState("");
+  const [needRefresh, setNeedRefresh] = useState(false);
+  const [cookie] = useCookies();
 
   function dropDownLevel() {
     if (status) {
@@ -28,29 +33,26 @@ export default function Sidevar() {
     }
   }
 
+  const fetchLabels = async () => {
+    const fetchData = await getRequest(
+      REST_API_ENDPOINTS.labels,
+      cookie.server_token
+    );
+    setLabels(fetchData);
+  };
+
   useEffect(() => {
-    const axiosLabels = async () => {
-        await axios.get(`http://127.0.0.1:8000/api/labels/`)
-        .then((response) => {
-          console.log("success", response.data);
-          setLabels(response.data.results)
-        })
-        .catch((error) => {
-          console.log("eroor.");
-        });
-     
-    };
-    axiosLabels();
-  }, [labels]);
+    fetchLabels();
+  }, [needRefresh]);
+
+  const refreshPage = () => {
+    setNeedRefresh(!needRefresh);
+  };
 
   return (
     <>
       <div className={classes.sidebar}>
-        <Link
-          to="/new-contact"
-          className={`${classes.createContactBtn} link`}
-          onclick="window.location = '/pages/contact-editor.html'"
-        >
+        <Link to="/new-contact" className={`${classes.createContactBtn} link`}>
           <svg width="30" height="30" viewBox="0 0 36 36">
             <path fill="#34A853" d="M16 16v14h4V20z"></path>
             <path fill="#4285F4" d="M30 16H20l-4 4h14z"></path>
@@ -84,7 +86,7 @@ export default function Sidevar() {
             <div className={classes.dropdownContent} ref={levelRef}>
               {labels &&
                 labels.map((label) => (
-                  <div className={classes.link}>
+                  <div key={label.id} className={classes.link}>
                     <div className={classes.content}>
                       <FontAwesomeIcon icon={faTag} /> {label.title}
                     </div>
@@ -92,31 +94,22 @@ export default function Sidevar() {
 
                     <div className={classes.actions}>
                       <div className={classes.actionButton}>
-                        <FontAwesomeIcon icon={faPencil} />
+                        {/* <FontAwesomeIcon icon={faPencil} /> */}
+                        <EditLabel label={label} onRefresh={refreshPage} />
                       </div>
                       <div className={classes.actionButton}>
-                        <FontAwesomeIcon icon={faTrash} />
+                        {/* <FontAwesomeIcon icon={faTrash} /> */}
+                        <Delete
+                          url={`${REST_API_ENDPOINTS.labels}${label.id}/`}
+                          value={"Label"}
+                          onRefresh={refreshPage}
+                        />
                       </div>
                     </div>
                   </div>
                 ))}
 
-              <div className={classes.link}>
-                <div className={classes.content}>
-                  <FontAwesomeIcon icon={faTag} /> Label 1
-                </div>
-                <div className={classes.counter}>500</div>
-
-                <div className={classes.actions}>
-                  <div className={classes.actionButton}>
-                    <FontAwesomeIcon icon={faPencil} />
-                  </div>
-                  <div className={classes.actionButton}>
-                    <FontAwesomeIcon icon={faTrash} />
-                  </div>
-                </div>
-              </div>
-              <CreateLabel />
+              <CreateLabel onRefresh={refreshPage} />
             </div>
           </div>
           <div className={classes.divider}></div>

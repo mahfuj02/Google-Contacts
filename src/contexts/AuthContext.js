@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useGoogleLogin, googleLogout } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
+import {REST_API_ENDPOINTS} from "../core/routes"
 
 const AuthContext = React.createContext();
 
@@ -15,7 +16,7 @@ export function AuthProvider({ children }) {
 
   function CreateUser(googleToken, route, setCookie) {
     fetch(
-      `http://127.0.0.1:8000/login/google/`,
+      REST_API_ENDPOINTS.googleLogin,
 
       // `${process.env.REACT_APP_API_URL}/login/google/`,
       {

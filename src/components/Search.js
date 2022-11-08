@@ -12,10 +12,10 @@ export default function Search() {
             <i className="fa fa-search" aria-hidden="true"></i>
           </div>
         </button>
-        <input type="text" placeholder="Search" onkeyup="searchKeyUp(event)" />
+        <input type="text" placeholder="Search" onKeyUp={()=>{}} />
         <button
           className={classes.clearSearchButton}
-          onclick="clearSearchInput()"
+          onClick={()=>{}}
         >
           <div>
             <FontAwesomeIcon icon={ faMagnifyingGlass } />
