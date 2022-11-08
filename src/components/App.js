@@ -9,58 +9,61 @@ import EditContact from "./pages/EditContact";
 import Login from "./pages/Login";
 import PrivateRoute from "../core/PrivateRoute";
 import PublicRoute from "./PublicRoute";
+import { RefreshProvider } from "../contexts/RefreshContext";
 function App() {
   return (
     <Router>
       <GoogleOAuthProvider clientId="385414291713-go7kf35ep3vv5ubgt5gg1446s1c1mig4.apps.googleusercontent.com">
-            <Layout>
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <PrivateRoute>
-                      {" "}
-                      <Home />{" "}
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="/new-contact"
-                  element={
-                    <PrivateRoute>
-                      {" "}
-                      <CreateContact />{" "}
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="/person/:id"
-                  element={
-                    <PrivateRoute>
-                      {" "}
-                      <ContactProfile />{" "}
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="/edit-person/:id"
-                  element={
-                    <PrivateRoute>
-                      {" "}
-                      <EditContact />{" "}
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="/login"
-                  element={
-                    <PublicRoute>
-                      <Login />
-                    </PublicRoute>
-                  }
-                />
-              </Routes>
-            </Layout>
+        <RefreshProvider>
+          <Layout>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <PrivateRoute>
+                    {" "}
+                    <Home />{" "}
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/new-contact"
+                element={
+                  <PrivateRoute>
+                    {" "}
+                    <CreateContact />{" "}
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/person/:id"
+                element={
+                  <PrivateRoute>
+                    {" "}
+                    <ContactProfile />{" "}
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/edit-person/:id"
+                element={
+                  <PrivateRoute>
+                    {" "}
+                    <EditContact />{" "}
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/login"
+                element={
+                  <PublicRoute>
+                    <Login />
+                  </PublicRoute>
+                }
+              />
+            </Routes>
+          </Layout>
+        </RefreshProvider>
       </GoogleOAuthProvider>
     </Router>
   );

@@ -5,17 +5,18 @@ import { useState } from "react";
 import { postRequest } from "../core/fetchers";
 import { REST_API_ENDPOINTS } from "../core/routes";
 import { useCookies } from "react-cookie";
-
+import { useRefresh } from "../contexts/RefreshContext";
 const initialValues = {
   title: "",
   success: false,
   error: false,
 };
 
-export default function CreateLabel({ onRefresh }) {
+export default function CreateLabel() {
   const [status, setStatus] = useState(false);
   const [labels, setLabels] = useState(initialValues);
   const [cookie] = useCookies();
+  const {onRefresh} = useRefresh()
 
   function ShowlabelDialog() {
     if (status) {
@@ -48,6 +49,7 @@ export default function CreateLabel({ onRefresh }) {
         onRefresh();
       }
     );
+    closeDialog();
   };
 
   return (

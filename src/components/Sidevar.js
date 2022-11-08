@@ -14,13 +14,15 @@ import CreateLabel from "./CreateLabel";
 import EditLabel from "./EditLabel";
 import { REST_API_ENDPOINTS } from "../core/routes";
 import { getRequest } from "../core/fetchers";
+import { useRefresh } from "../contexts/RefreshContext";
 import Delete from "./Delete";
 
 export default function Sidevar() {
   const levelRef = useRef();
   const [status, setStatus] = useState(false);
   const [labels, setLabels] = useState("");
-  const [needRefresh, setNeedRefresh] = useState(false);
+  // const [needRefresh, setNeedRefresh] = useState(false);
+  const{needRefresh} = useRefresh()
   const [cookie] = useCookies();
 
   function dropDownLevel() {
@@ -45,9 +47,9 @@ export default function Sidevar() {
     fetchLabels();
   }, [needRefresh]);
 
-  const refreshPage = () => {
-    setNeedRefresh(!needRefresh);
-  };
+  // const refreshPage = () => {
+  //   setNeedRefresh(!needRefresh);
+  // };
 
   return (
     <>
@@ -95,21 +97,21 @@ export default function Sidevar() {
                     <div className={classes.actions}>
                       <div className={classes.actionButton}>
                         {/* <FontAwesomeIcon icon={faPencil} /> */}
-                        <EditLabel label={label} onRefresh={refreshPage} />
+                        <EditLabel label={label}  />
                       </div>
                       <div className={classes.actionButton}>
                         {/* <FontAwesomeIcon icon={faTrash} /> */}
                         <Delete
                           url={`${REST_API_ENDPOINTS.labels}${label.id}/`}
                           value={"Label"}
-                          onRefresh={refreshPage}
+                          // onRefresh={refreshPage}
                         />
                       </div>
                     </div>
                   </div>
                 ))}
 
-              <CreateLabel onRefresh={refreshPage} />
+              <CreateLabel />
             </div>
           </div>
           <div className={classes.divider}></div>

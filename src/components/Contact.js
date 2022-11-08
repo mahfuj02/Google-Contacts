@@ -4,7 +4,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Delete from "./Delete";
 import { REST_API_ENDPOINTS } from "../core/routes";
 import { useNavigate } from "react-router-dom";
-export default function Contact({ contact, onRefresh }) {
+export default function Contact({ contact }) {
   const navigator = useNavigate();
   return (
     <div
@@ -25,7 +25,6 @@ export default function Contact({ contact, onRefresh }) {
           <Delete
             url={`${REST_API_ENDPOINTS.contacts}${contact.id}/`}
             value={"Contact"}
-            onRefresh={onRefresh}
           />
           {/* <FontAwesomeIcon icon={faTrash} /> */}
         </div>

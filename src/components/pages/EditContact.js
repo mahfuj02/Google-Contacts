@@ -11,9 +11,10 @@ import {
 import { useCookies } from "react-cookie";
 import LabelPicker from "../LabelPicker";
 import { useEffect, useState } from "react";
-import { getRequest, updateRequest } from "../../core/fetchers";
+import { updateRequest } from "../../core/fetchers";
 import { REST_API_ENDPOINTS } from "../../core/routes";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useRefresh } from "../../contexts/RefreshContext";
 
 const initialValues = {
   id: 0,
@@ -33,7 +34,8 @@ export default function EditContact() {
   const location = useLocation();
   const [cookie] = useCookies();
   const { id } = useParams();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { onRefresh } = useRefresh();
 
   function convertLabelArray(labels) {
     labels.map((label) => labelList.push(label.id));
@@ -43,7 +45,7 @@ export default function EditContact() {
     convertLabelArray(contactInfo.label);
     setValues({
       ...contactInfo,
-      label:labelList,
+      label: labelList,
     });
   }, []);
   // const [image, setImage] = useState(null)
@@ -71,9 +73,12 @@ export default function EditContact() {
       `${REST_API_ENDPOINTS.contacts}${id}/`,
       values,
       cookie.server_token
+    ).then(
+      () => {
+        onRefresh();
+        navigate(`/person/${id}/`);
+      }
     );
-    navigate(`/person/${id}/`)
-    
   };
 
   return (

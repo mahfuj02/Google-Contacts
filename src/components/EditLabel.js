@@ -1,15 +1,16 @@
 import classes from "../styles/EditLabel.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
-import {  useState } from "react";
+import { useState } from "react";
 import { updateRequest } from "../core/fetchers";
 import { REST_API_ENDPOINTS } from "../core/routes";
 import { useCookies } from "react-cookie";
 import { useRefresh } from "../contexts/RefreshContext";
-export default function EditLabel({ label ,onRefresh }) {
+export default function EditLabel({ label }) {
   const [status, setStatus] = useState(false);
   const [labels, setLabels] = useState(label);
   const [cookie] = useCookies();
+  const { onRefresh } = useRefresh();
   function ShowlabelDialog() {
     if (status) {
       setStatus(false);
@@ -35,19 +36,14 @@ export default function EditLabel({ label ,onRefresh }) {
   };
   const updateLabelinfo = (e) => {
     e.preventDefault();
-    console.log(
-      updateRequest(
-        `${REST_API_ENDPOINTS.labels}${labels.id}/`,
-        labels,
-        cookie.server_token
-      ).then(() => {
-        onRefresh();
-      })
-    );
-  };
-  const multipleCaller = (e) => {
-    updateLabelinfo(e);
-    closeDialog(e);
+    updateRequest(
+      `${REST_API_ENDPOINTS.labels}${labels.id}/`,
+      labels,
+      cookie.server_token
+    ).then(() => {
+      onRefresh();
+    });
+    closeDialog();
   };
 
   return (
@@ -60,7 +56,7 @@ export default function EditLabel({ label ,onRefresh }) {
           <div className={classes.dialogOverlay} onClick={closeDialog}></div>
           <form
             action=""
-            onSubmit={multipleCaller}
+            onSubmit={updateLabelinfo}
             className={classes.dialogContentContainer}
           >
             <div className={classes.dialogTitle}>Edit Contact</div>

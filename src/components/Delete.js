@@ -4,10 +4,11 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { deleteRequest } from "../core/fetchers";
 import { useCookies } from "react-cookie";
-
-export default function Delete({ url, value, onRefresh }) {
+import { useRefresh } from "../contexts/RefreshContext";
+export default function Delete({ url, value }) {
   const [status, setStatus] = useState(false);
   const [cookie] = useCookies();
+  const { onRefresh } = useRefresh();
 
   function ShowlabelDialog() {
     if (status) {

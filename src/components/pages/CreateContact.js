@@ -13,6 +13,8 @@ import LabelPicker from "../LabelPicker";
 import { useState } from "react";
 import { postRequest } from "../../core/fetchers";
 import { REST_API_ENDPOINTS } from "../../core/routes";
+import { useRefresh } from "../../contexts/RefreshContext";
+import { useNavigate } from "react-router-dom";
 
 const initialValues = {
   title: "",
@@ -24,12 +26,13 @@ const initialValues = {
   success: false,
   error: false,
 };
-let labelList = []
-
+let labelList = [];
 
 export default function CreateContact() {
   const [values, setValues] = useState(initialValues);
   const [cookie] = useCookies();
+  const { onRefresh } = useRefresh();
+  const navigate = useNavigate();
   // const [image, setImage] = useState(null)
   const handleInputChange = (e) => {
     let { name, value } = e.target;
@@ -44,13 +47,15 @@ export default function CreateContact() {
   };
 
   const addLabel = (labelList) => {
-    console.log("labelList to create Con: ", labelList)
+    console.log("labelList to create Con: ", labelList);
     values.label = labelList;
     labelList = [];
-    console.log(labelList," labelList to create Con for values: ", values.label)
-
-  }
-  
+    console.log(
+      labelList,
+      " labelList to create Con for values: ",
+      values.label
+    );
+  };
 
   const addContactInfo = () => {
     // let formData = new FormData();
@@ -60,7 +65,12 @@ export default function CreateContact() {
     // if (values.image !== null) formData.append("image", values.image);
     // console.log(cookie.server_token);
     // console.log("Form data: ", formData, " values: ", values)
-    postRequest(REST_API_ENDPOINTS.contacts, values, cookie.server_token);
+    postRequest(REST_API_ENDPOINTS.contacts, values, cookie.server_token).then(
+      () => {
+        onRefresh();
+        navigate("/");
+      }
+    );
   };
 
   return (
@@ -91,7 +101,7 @@ export default function CreateContact() {
           <div className={classes.name}></div>
           <div className={classes.labelsSection}>
             <div className={classes.labels}></div>
-            <LabelPicker addLabel = {addLabel} labelList={labelList} />
+            <LabelPicker addLabel={addLabel} labelList={labelList} />
           </div>
         </div>
 

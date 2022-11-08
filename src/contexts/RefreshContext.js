@@ -13,10 +13,10 @@ export function RefreshProvider({ children }) {
     setNeedRefresh(!needRefresh);
   };
 
-  
-
   return (
-    <RefreshContext.Provider onRefresh={refreshPage}>
+    <RefreshContext.Provider
+      value={{ onRefresh: refreshPage, needRefresh:needRefresh }}
+    >
       {children}
     </RefreshContext.Provider>
   );
