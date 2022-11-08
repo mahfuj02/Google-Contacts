@@ -7,13 +7,13 @@ import { REST_API_ENDPOINTS } from "../core/routes";
 import { useRefresh } from "../contexts/RefreshContext";
 import { useCookies } from "react-cookie";
 
-export default function Contacts() {
+export default function Contacts({url}) {
   const [contacts, setContacts] = useState(null);
   const [cookie] = useCookies();
   const {needRefresh} = useRefresh()  
   const fetchContacts = async () => {
     const fetchData = await getRequest(
-      REST_API_ENDPOINTS.contacts,
+      url,
       cookie.server_token
     );
     setContacts(fetchData);
@@ -21,7 +21,7 @@ export default function Contacts() {
   
   useEffect( () => {
     fetchContacts();
-  }, [needRefresh]);
+  }, [needRefresh, url]);
 
   return (
     <div className={classes.tablebody}>

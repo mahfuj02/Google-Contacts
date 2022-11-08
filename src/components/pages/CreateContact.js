@@ -28,11 +28,12 @@ const initialValues = {
 };
 let labelList = [];
 
-export default function CreateContact() {
+export default function CreateContact({url}) {
   const [values, setValues] = useState(initialValues);
   const [cookie] = useCookies();
   const { onRefresh } = useRefresh();
   const navigate = useNavigate();
+  console.log("Created URL: ", url)
   // const [image, setImage] = useState(null)
   const handleInputChange = (e) => {
     let { name, value } = e.target;

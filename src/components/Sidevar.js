@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import classes from "../styles/Sidevar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   faUser,
   faChevronDown,
@@ -24,6 +24,7 @@ export default function Sidevar() {
   // const [needRefresh, setNeedRefresh] = useState(false);
   const{needRefresh} = useRefresh()
   const [cookie] = useCookies();
+  const navigate = useNavigate();
 
   function dropDownLevel() {
     if (status) {
@@ -88,11 +89,12 @@ export default function Sidevar() {
             <div className={classes.dropdownContent} ref={levelRef}>
               {labels &&
                 labels.map((label) => (
-                  <div key={label.id} className={classes.link}>
+                  // http://127.0.0.1:8000/api/contacts/?label__id=10
+                  <div onClick={() => navigate('/new-contact',{url:`${REST_API_ENDPOINTS.contacts}?label_id=${label.id}`})} key={label.id} className={classes.link}>
                     <div className={classes.content}>
                       <FontAwesomeIcon icon={faTag} /> {label.title}
                     </div>
-                    <div className={classes.counter}>500</div>
+                    <div className={classes.counter}>{label.contacts}</div>
 
                     <div className={classes.actions}>
                       <div className={classes.actionButton}>
