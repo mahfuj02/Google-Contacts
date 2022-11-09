@@ -42,6 +42,7 @@ export default function EditContact() {
   }
   useEffect(() => {
     const { contactInfo } = location.state;
+    
     convertLabelArray(contactInfo.label);
     setValues({
       ...contactInfo,

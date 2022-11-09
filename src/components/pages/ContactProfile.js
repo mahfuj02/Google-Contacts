@@ -12,7 +12,7 @@ import LabelPicker from "../LabelPicker";
 import ContactProfileField from "../ContactProfileField";
 import { useEffect, useState } from "react";
 import { REST_API_ENDPOINTS } from "../../core/routes";
-import { getRequest } from "../../core/fetchers";
+import { getRequest, SwrRequest } from "../../core/fetchers";
 export default function ContactProfile() {
   const [ContactProfile, setContactProfile] = useState("");
 

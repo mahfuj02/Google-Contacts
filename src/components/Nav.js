@@ -50,9 +50,9 @@ const Nav = ({ toggleFunc }) => {
       ) : (
         <div className={classes.actionSection}>
           <div className={classes.logotButton}>
-            <Link className="nav-link" to="/login">
+            {/* <Link className="nav-link" to="/login">
               Log In
-            </Link>
+            </Link> */}
           </div>
           {/* <img src={profile} alt="profile" /> */}
         </div>

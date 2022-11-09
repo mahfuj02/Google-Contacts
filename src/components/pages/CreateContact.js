@@ -14,7 +14,7 @@ import { useState } from "react";
 import { postRequest } from "../../core/fetchers";
 import { REST_API_ENDPOINTS } from "../../core/routes";
 import { useRefresh } from "../../contexts/RefreshContext";
-import { useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 const initialValues = {
   title: "",
@@ -28,12 +28,11 @@ const initialValues = {
 };
 let labelList = [];
 
-export default function CreateContact({url}) {
+export default function CreateContact() {
   const [values, setValues] = useState(initialValues);
   const [cookie] = useCookies();
   const { onRefresh } = useRefresh();
   const navigate = useNavigate();
-  console.log("Created URL: ", url)
   // const [image, setImage] = useState(null)
   const handleInputChange = (e) => {
     let { name, value } = e.target;

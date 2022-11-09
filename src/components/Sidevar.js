@@ -22,7 +22,7 @@ export default function Sidevar() {
   const [status, setStatus] = useState(false);
   const [labels, setLabels] = useState("");
   // const [needRefresh, setNeedRefresh] = useState(false);
-  const{needRefresh} = useRefresh()
+  const { needRefresh } = useRefresh();
   const [cookie] = useCookies();
   const navigate = useNavigate();
 
@@ -51,7 +51,13 @@ export default function Sidevar() {
   // const refreshPage = () => {
   //   setNeedRefresh(!needRefresh);
   // };
-
+  const toComponentHome = (id) => {
+    navigate("/", {
+      state: {
+        params: `?label__id=${id}`,
+      },
+    });
+  };
   return (
     <>
       <div className={classes.sidebar}>
@@ -90,7 +96,11 @@ export default function Sidevar() {
               {labels &&
                 labels.map((label) => (
                   // http://127.0.0.1:8000/api/contacts/?label__id=10
-                  <div onClick={() => navigate('/new-contact',{url:`${REST_API_ENDPOINTS.contacts}?label_id=${label.id}`})} key={label.id} className={classes.link}>
+                  <div
+                    onClick={() => toComponentHome(label.id)}
+                    key={label.id}
+                    className={classes.link}
+                  >
                     <div className={classes.content}>
                       <FontAwesomeIcon icon={faTag} /> {label.title}
                     </div>
@@ -99,7 +109,7 @@ export default function Sidevar() {
                     <div className={classes.actions}>
                       <div className={classes.actionButton}>
                         {/* <FontAwesomeIcon icon={faPencil} /> */}
-                        <EditLabel label={label}  />
+                        <EditLabel label={label} />
                       </div>
                       <div className={classes.actionButton}>
                         {/* <FontAwesomeIcon icon={faTrash} /> */}
