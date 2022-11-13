@@ -11,17 +11,15 @@ export default function EditLabel({ label }) {
   const [labels, setLabels] = useState(label);
   const [cookie] = useCookies();
   const { onRefresh } = useRefresh();
-  function ShowlabelDialog() {
-    if (status) {
-      setStatus(false);
-    } else {
-      setStatus(true);
-    }
+  function ShowlabelDialog(e) {
+    e.stopPropagation()
+    setStatus(!status)
   }
 
-  function closeDialog() {
+  function closeDialog(e) {
+    e.stopPropagation();
+
     if (status) {
-      
       setStatus(false);
     }
   }
@@ -42,7 +40,7 @@ export default function EditLabel({ label }) {
     ).then(() => {
       onRefresh();
     });
-    closeDialog();
+    closeDialog(e);
   };
 
   return (
@@ -55,7 +53,7 @@ export default function EditLabel({ label }) {
           <div className={classes.dialogOverlay} onClick={closeDialog}></div>
           <form
             action=""
-            onSubmit={updateLabelinfo}
+            // onSubmit={updateLabelinfo}
             className={classes.dialogContentContainer}
           >
             <div className={classes.dialogTitle}>Edit Contact</div>
@@ -72,7 +70,7 @@ export default function EditLabel({ label }) {
               <button className={classes.cancelBtn} onClick={closeDialog}>
                 Cancel
               </button>
-              <button type="submit">Save</button>
+              <button type="submit" onClick={updateLabelinfo}>Save</button>
             </div>
           </form>
         </div>
