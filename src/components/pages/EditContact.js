@@ -6,7 +6,6 @@ import {
   faPhone,
   faGlobe,
   faCamera,
-  faL,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { useCookies } from "react-cookie";
@@ -61,7 +60,6 @@ const initialValues = {
 
 export default function EditContact() {
   const [values, setValues] = useState(initialValues);
-  const [labelList, setLabelList] = useState(0);
   const [currentLabel, dispatch] = useReducer(reducer, initialState);
   const [loading, setLoading] = useState(true);
   const location = useLocation();
@@ -72,14 +70,20 @@ export default function EditContact() {
   const [dialogStatus, setDialogStatus] = useState(false);
 
   function convertLabelObjectToArray(labels) {
-    labels.map((label) => labelList.push(label.id));
+    let labelArray = [];
+    labels.map((label) => {
+      if ("chacked" in label && label["chacked"]) {
+        labelArray.push(label.id);
+      }
+    });
+    return labelArray;
   }
   const fetchLabels = async (label) => {
+    setLoading(true)
     const fetchData = await getRequest(
       REST_API_ENDPOINTS.labels,
       cookie.server_token
     );
-    setLoading(true);
     dispatch({
       type: "label",
       value: fetchData,
@@ -90,27 +94,15 @@ export default function EditContact() {
   useEffect(() => {
     setLoading(true);
     const { contactInfo } = location.state;
-    const labels = fetchLabels(contactInfo.label);
+    fetchLabels(contactInfo.label);
+      setValues({
+        ...contactInfo,
+      });
 
-    if (!loading) {
-      console.log(currentLabel, " ::..edit contact: ", contactInfo);
-    }
 
-    // dispatch({
-    //   type:"label",
-    //   value:labels
 
-    // })
-    // convertLabelObjectToArray(contactInfo.label);
-    setValues({
-      ...contactInfo,
-      label: labelList,
-    });
-
-    // navigate(location.pathname, { replace: true });
   }, [dialogStatus]);
 
-  // const [image, setImage] = useState(null)
   const handleInputChange = (e) => {
     let { name, value } = e.target;
     if (e.target.name === "image") {
@@ -122,12 +114,20 @@ export default function EditContact() {
     });
   };
 
-  const addLabel = (labelList) => {
-    values.label = labelList;
-    labelList = [];
+  const addLabel = (labels) => {
+    const labelArray = convertLabelObjectToArray(labels);
+    console.log(labelArray, "recieved converted data..");
+    setLoading(true)
+    setValues({
+      ...values,
+      label: labelArray,
+    });
+    setLoading(false)
+
   };
 
   const updateContactInfo = () => {
+    console.log(values, "value last chacked..")
     updateRequest(
       `${REST_API_ENDPOINTS.contacts}${id}/`,
       values,
@@ -163,7 +163,7 @@ export default function EditContact() {
   // }
 
   const changeDialog = () => {
-    console.log("this is called")
+    console.log("this is called");
     setDialogStatus(!dialogStatus);
   };
 

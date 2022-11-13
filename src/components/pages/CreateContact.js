@@ -10,11 +10,33 @@ import {
 
 import { useCookies } from "react-cookie";
 import LabelPicker from "../LabelPicker";
-import { useEffect, useState } from "react";
-import { postRequest } from "../../core/fetchers";
+import { useEffect, useReducer, useState } from "react";
+import { getRequest, postRequest } from "../../core/fetchers";
 import { REST_API_ENDPOINTS } from "../../core/routes";
 import { useRefresh } from "../../contexts/RefreshContext";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import _ from "lodash";
+
+const initialState = null;
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "label":
+      action.value.forEach((label) => {
+        label.chacked = false;
+      });
+      return action.value;
+
+    case "selected":
+      const label = _.cloneDeep(state);
+      label[action.labelID].chacked = action.value;
+
+      return label;
+
+    default:
+      return state;
+  }
+};
 
 const initialValues = {
   title: "",
@@ -26,17 +48,41 @@ const initialValues = {
   success: false,
   error: false,
 };
-let labelList = [];
 
 export default function CreateContact() {
   const [values, setValues] = useState(initialValues);
   const [cookie] = useCookies();
+  const [currentLabel, dispatch] = useReducer(reducer, initialState);
   const { onRefresh } = useRefresh();
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [dialogStatus, setDialogStatus] = useState(false);
   // const [image, setImage] = useState(null)
-  useEffect(() =>{
-    labelList = [];
-  },[])
+
+  function convertLabelObjectToArray(labels) {
+    let labelArray = [];
+    labels.map((label) => {
+      if (label["chacked"]) {
+        labelArray.push(label.id);
+      }
+    });
+    return labelArray;
+  }
+  const fetchLabels = async () => {
+    const fetchData = await getRequest(
+      REST_API_ENDPOINTS.labels,
+      cookie.server_token
+    );
+    dispatch({
+      type: "label",
+      value: fetchData,
+    });
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    fetchLabels();
+  }, [dialogStatus]);
 
   const handleInputChange = (e) => {
     let { name, value } = e.target;
@@ -50,13 +96,33 @@ export default function CreateContact() {
     });
   };
 
-  const addLabel = (labelList) => {
-    values.label = labelList;
-    labelList = [];
-    console.log(
-      labelList,
-      values.label
-    );
+  const addLabel = (labels) => {
+    let labelArray = convertLabelObjectToArray(labels);
+    console.log(labelArray, "recieved converted data..");
+    setValues({
+      ...values,
+      label: labelArray,
+    }); // setDialogStatus(!dialogStatus);
+  };
+  const changeDialog = () => {
+    console.log("this is called");
+    setDialogStatus(!dialogStatus);
+  };
+
+  const handleLabelChange = (isSelect, index) => {
+    console.log("handle label change called....");
+    setLoading(true);
+    if (isSelect) {
+      isSelect = false;
+    } else {
+      isSelect = true;
+    }
+    dispatch({
+      type: "selected",
+      labelID: index,
+      value: isSelect,
+    });
+    setLoading(false);
   };
 
   const addContactInfo = () => {
@@ -103,7 +169,15 @@ export default function CreateContact() {
           <div className={classes.name}></div>
           <div className={classes.labelsSection}>
             <div className={classes.labels}></div>
-            <LabelPicker addLabel={addLabel} labelList={labelList} />
+            <LabelPicker
+              addLabel={addLabel}
+              labelList={currentLabel}
+              handleChange={handleLabelChange}
+              updateDialogStatus={changeDialog}
+              dialogStatus={dialogStatus}
+
+              // updatedLabel={values.label}
+            />{" "}
           </div>
         </div>
 

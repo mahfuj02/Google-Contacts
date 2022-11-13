@@ -1,5 +1,5 @@
 import classes from "../../styles/ContactProfile.module.css";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 // import { useState } from "react";
 import {
@@ -8,17 +8,15 @@ import {
   faGlobe,
 } from "@fortawesome/free-solid-svg-icons";
 import { useCookies } from "react-cookie";
-import LabelPicker from "../LabelPicker";
 import ContactProfileField from "../ContactProfileField";
 import { useEffect, useState } from "react";
 import { REST_API_ENDPOINTS } from "../../core/routes";
-import { getRequest, SwrRequest } from "../../core/fetchers";
+import { getRequest } from "../../core/fetchers";
 export default function ContactProfile() {
   const [ContactProfile, setContactProfile] = useState("");
   const navigate = useNavigate()
   const [cookie] = useCookies();
   const { id } = useParams();
-  let lebelList = [];
   const fetchContactProfile = async () => {
     const profileData = await getRequest(
       `${REST_API_ENDPOINTS.contacts}${id}`,

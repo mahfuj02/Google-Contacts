@@ -4,8 +4,6 @@ import { faTag, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import CreateLabel from "./CreateLabel";
 
-import { useCookies } from "react-cookie";
-
 export default function LabelPicker({
   addLabel,
   labelList,
@@ -13,25 +11,15 @@ export default function LabelPicker({
   updateDialogStatus,
   dialogStatus,
 }) {
- 
   const [submited, setSubmited] = useState(false);
-  useEffect(() => {
-  }, [labelList]);
+  useEffect(() => {}, [labelList]);
 
-  const LocalLabels = (id) => {
-    if (labelList.includes(id)) {
-      let labelIndex = labelList.indexOf(id);
-      labelList.splice(labelIndex, 1);
-    } else {
-      labelList.push(id);
-    }
-    // setLocalLabel(labelList);
-    // console.log("current LabelList: ", labelList," locallabel: ", localLabel)
-  };
 
   const MultipleCaller = (e) => {
-    setSubmited(true)
     e.stopPropagation();
+    addLabel(labelList);
+    setSubmited(true);
+
   };
   return (
     <>
