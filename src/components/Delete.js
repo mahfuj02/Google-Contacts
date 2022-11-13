@@ -16,7 +16,6 @@ export default function Delete({ url, value }) {
     } else {
       setStatus(true);
     }
-    console.log("status", status);
   }
 
   function closeDialog(e) {

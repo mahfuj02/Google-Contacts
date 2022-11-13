@@ -10,7 +10,7 @@ import {
 
 import { useCookies } from "react-cookie";
 import LabelPicker from "../LabelPicker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { postRequest } from "../../core/fetchers";
 import { REST_API_ENDPOINTS } from "../../core/routes";
 import { useRefresh } from "../../contexts/RefreshContext";
@@ -34,6 +34,10 @@ export default function CreateContact() {
   const { onRefresh } = useRefresh();
   const navigate = useNavigate();
   // const [image, setImage] = useState(null)
+  useEffect(() =>{
+    labelList = [];
+  },[])
+
   const handleInputChange = (e) => {
     let { name, value } = e.target;
     if (e.target.name === "image") {
@@ -47,12 +51,10 @@ export default function CreateContact() {
   };
 
   const addLabel = (labelList) => {
-    console.log("labelList to create Con: ", labelList);
     values.label = labelList;
     labelList = [];
     console.log(
       labelList,
-      " labelList to create Con for values: ",
       values.label
     );
   };

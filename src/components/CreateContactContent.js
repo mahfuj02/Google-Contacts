@@ -28,7 +28,6 @@ export default function CreateContactContent() {
         [name]: value,
       });
     };
-    console.log("values,,,", values);
 
   return (
     <>

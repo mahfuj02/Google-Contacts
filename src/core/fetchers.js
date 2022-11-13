@@ -1,3 +1,4 @@
+import { useState } from "react";
 import useSWR from "swr";
 
 const GetHeader = (server_token) => {
@@ -8,7 +9,9 @@ const GetHeader = (server_token) => {
   };
 };
 
-export const getRequest = async (url, server_token) => {
+export const getRequest = async (...args) => {
+  const [url, server_token] = args;
+  console.log("this is called..")
   const head = GetHeader(server_token);
   const response = await fetch(url, {
     method: "GET",
@@ -79,8 +82,8 @@ export const deleteRequest = async (url, server_token) => {
   return { statusCode: response.status };
 };
 
-// export const SwrRequest = (url, server_token) => {
-//     console.log("Swr reqe called..")
-//   const { data } = useSWR([url, server_token], getRequest);
-//   console.log("log from swr fethcer: ",data);
-// };
+export const SwrRequest = (url, server_token) => {
+    console.log("Swr reqe called..")
+  const { data, error } = useSWR([url, server_token], getRequest);
+  console.log("log from swr fethcer: ",data);
+};

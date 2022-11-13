@@ -17,11 +17,11 @@ export default function EditLabel({ label }) {
     } else {
       setStatus(true);
     }
-    console.log("status", status);
   }
 
   function closeDialog() {
     if (status) {
+      
       setStatus(false);
     }
   }
@@ -32,7 +32,6 @@ export default function EditLabel({ label }) {
       ...labels,
       [name]: value,
     });
-    console.log("labels: ", labels);
   };
   const updateLabelinfo = (e) => {
     e.preventDefault();

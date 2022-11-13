@@ -1,5 +1,5 @@
 import classes from "../../styles/ContactProfile.module.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 // import { useState } from "react";
 import {
@@ -15,7 +15,7 @@ import { REST_API_ENDPOINTS } from "../../core/routes";
 import { getRequest, SwrRequest } from "../../core/fetchers";
 export default function ContactProfile() {
   const [ContactProfile, setContactProfile] = useState("");
-
+  const navigate = useNavigate()
   const [cookie] = useCookies();
   const { id } = useParams();
   let lebelList = [];
@@ -30,6 +30,15 @@ export default function ContactProfile() {
   useEffect(() => {
     fetchContactProfile();
   }, []);
+
+  const toComponentHome = () => {
+    navigate(`/edit-person/${id}`, {
+      state: {
+        contactInfo: ContactProfile,
+      },
+            
+    });
+  };
 
   return (
     <>
@@ -47,13 +56,13 @@ export default function ContactProfile() {
             {/* <LabelPicker /> */}
           </div>
         </div>
-        <div className={classes.actionSection}>
-          <Link to={`/edit-person/${id}`} state={{contactInfo: ContactProfile}} >
+        <div onClick={toComponentHome} className={classes.actionSection}>
+          {/* <Link to={`/edit-person/${id}`} state={{contactInfo: ContactProfile}} > */}
             {" "}
             <button className="editButton primary-button button">
               Edit
             </button>{" "}
-          </Link>
+          {/* </Link> */}
           <button className="deleteButton button">Delete</button>
         </div>
       </div>

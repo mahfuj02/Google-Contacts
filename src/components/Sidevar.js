@@ -42,6 +42,8 @@ export default function Sidevar() {
       cookie.server_token
     );
     setLabels(fetchData);
+    
+    
   };
 
   useEffect(() => {

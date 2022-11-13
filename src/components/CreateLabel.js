@@ -24,7 +24,6 @@ export default function CreateLabel() {
     } else {
       setStatus(true);
     }
-    console.log("status", status);
   }
 
   function closeDialog() {
@@ -39,7 +38,6 @@ export default function CreateLabel() {
       ...labels,
       [name]: value,
     });
-    console.log("labels: ", labels);
   };
   const addLabelinfo = (e) => {
     e.preventDefault();

@@ -9,7 +9,6 @@ import {REST_API_ENDPOINTS} from "../core/routes"
 export default function Search() {
   const [value, setValue] = useState();
   const navigate = useNavigate();
-  console.log("valuess: ", value);
   const toComponentHome = () => {
     console.log(value, " ...");
 
