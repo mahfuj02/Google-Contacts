@@ -21,6 +21,7 @@ export default function Sidevar() {
   const levelRef = useRef();
   const [status, setStatus] = useState(false);
   const [labels, setLabels] = useState("");
+  const [activateLabel, setActivateLabel] = useState(0)
   // const [needRefresh, setNeedRefresh] = useState(false);
   const { needRefresh } = useRefresh();
   const [cookie] = useCookies();
@@ -42,8 +43,6 @@ export default function Sidevar() {
       cookie.server_token
     );
     setLabels(fetchData);
-    
-    
   };
 
   useEffect(() => {
@@ -53,7 +52,11 @@ export default function Sidevar() {
   // const refreshPage = () => {
   //   setNeedRefresh(!needRefresh);
   // };
+  const handleLabelClick = (id) => {
+      setActivateLabel(id);
+  }
   const toComponentHome = (id) => {
+    handleLabelClick(id)
     navigate("/", {
       state: {
         params: `?label__id=${id}`,
@@ -75,7 +78,7 @@ export default function Sidevar() {
         </Link>
 
         <div className={classes.links}>
-          <Link to="/" className={`${classes.link} ${classes.active} link`}>
+          <Link to="/" className={`${classes.link} ${activateLabel===0?classes.active:''} link`} onClick={() =>{handleLabelClick(0)}} >
             <div className={classes.content}>
               <FontAwesomeIcon icon={faUser} /> Contacts
             </div>
@@ -101,7 +104,7 @@ export default function Sidevar() {
                   <div
                     onClick={() => toComponentHome(label.id)}
                     key={label.id}
-                    className={classes.link}
+                    className={`${classes.link} ${label.id===activateLabel?classes.active:"" }`}
                   >
                     <div className={classes.content}>
                       <FontAwesomeIcon icon={faTag} /> {label.title}

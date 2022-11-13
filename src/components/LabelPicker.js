@@ -40,6 +40,7 @@ export default function LabelPicker({
                 labelList.map((label, index) => (
                   <div
                     className={`label`}
+                    key={label}
                     onClick={(e) => handleChange(label["chacked"], index)}
                   >
                     <div className="iconSection">

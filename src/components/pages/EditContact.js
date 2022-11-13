@@ -79,7 +79,7 @@ export default function EditContact() {
     return labelArray;
   }
   const fetchLabels = async (label) => {
-    setLoading(true)
+    setLoading(true);
     const fetchData = await getRequest(
       REST_API_ENDPOINTS.labels,
       cookie.server_token
@@ -95,12 +95,9 @@ export default function EditContact() {
     setLoading(true);
     const { contactInfo } = location.state;
     fetchLabels(contactInfo.label);
-      setValues({
-        ...contactInfo,
-      });
-
-
-
+    setValues({
+      ...contactInfo,
+    });
   }, [dialogStatus]);
 
   const handleInputChange = (e) => {
@@ -117,17 +114,16 @@ export default function EditContact() {
   const addLabel = (labels) => {
     const labelArray = convertLabelObjectToArray(labels);
     console.log(labelArray, "recieved converted data..");
-    setLoading(true)
+    setLoading(true);
     setValues({
       ...values,
       label: labelArray,
     });
-    setLoading(false)
-
+    setLoading(false);
   };
 
   const updateContactInfo = () => {
-    console.log(values, "value last chacked..")
+    console.log(values, "value last chacked..");
     updateRequest(
       `${REST_API_ENDPOINTS.contacts}${id}/`,
       values,
@@ -153,14 +149,6 @@ export default function EditContact() {
     });
     setLoading(false);
   };
-
-  // function ShowlabelDialog() {
-  //   if (status) {
-  //     setStatus(false);
-  //   } else {
-  //     setStatus(true);
-  //   }
-  // }
 
   const changeDialog = () => {
     console.log("this is called");

@@ -24,7 +24,7 @@ export default function Contacts({ url }) {
     <div className={classes.tablebody}>
       {contacts &&
         contacts.map((contact) => (
-          <Contact contact={contact}></Contact>
+          <Contact key={contact.id} contact={contact}></Contact>
         ))}
     </div>
   );
